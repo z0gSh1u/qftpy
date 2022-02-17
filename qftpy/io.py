@@ -1,3 +1,9 @@
+'''
+    Color image input and output for QFTPy.
+    
+    by z0gSh1u @ github.com/z0gSh1u/qftpy
+'''
+
 import numpy as np
 import quaternion
 from PIL import Image

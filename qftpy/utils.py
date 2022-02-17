@@ -1,5 +1,10 @@
+'''
+    Utilities for QFTPy.
+    
+    by z0gSh1u @ github.com/z0gSh1u/qftpy
+'''
+
 import numpy as np
-import quaternion
 
 EPS = np.finfo(np.float32).eps  # quaternion library internal uses float64. We relax epsilon to float32 here.
 X_AXIS = np.quaternion(0, 1, 0, 0)
@@ -8,23 +13,34 @@ Z_AXIS = np.quaternion(0, 0, 0, 1)
 
 
 def unit(q):
-    """
+    '''
         Normalize q (a single quaternion or a quaternion matrix) to unit modulus (1).
-    """
+    '''
     len_ = np.abs(q)
-    assert np.min(q) > EPS, 'The modulus of q is too short.'
+    assert np.min(len_) > EPS, 'The modulus of q is too short.'
     u = q / len_
     return u
 
 
 def isPure(q):
+    '''
+        Test if q is a pure quaternion
+    '''
     return abs(q.w) < EPS
 
 
+def dotProduct(a, b, scalar=False):
+    '''
+        Calculate the dot product (scalar product, inner product) of two quaternions. \\
+        Set `scalar=True` to include scalar components (`w`).
+    '''
+    return a.x * b.x + a.y * b.y + a.z * b.z + (a.w * b.w if scalar else 0)
+
+
 def crossProduct(a, b):
-    """
+    '''
         Calculate the cross product (vector product, outer product) of two pure quaternions.
-    """
+    '''
     assert isPure(a) and isPure(b), 'a and b must be pure quaternions.'
     x = a.y * b.z - a.z * b.y
     y = a.z * b.x - a.x * b.z
@@ -33,10 +49,17 @@ def crossProduct(a, b):
 
 
 def isParallel(a, b):
-    return crossProduct(a, b) < EPS
+    '''
+        Test if `a` and `b` (both pure) are parallel.
+    '''
+    return np.abs(crossProduct(a, b)) < EPS
 
 
-def ortho(v):
+def ortho(v, unit_=True):
+    '''
+        Construct a vector prependicular to `v` (pure). \\
+        Set `unit_=True` to get result with unit length.
+    '''
     assert isPure(v), 'v must be a pure quaternion.'
     # We first choose a vector `w` which is not parallel to v.
     # Consider standard basis first.
@@ -47,23 +70,29 @@ def ortho(v):
     elif isParallel(v, Z_AXIS):
         w = -Y_AXIS
     else:
-        # Now only two vectors (not parallel) is sufficient to consider.
+        # Now two vectors (not parallel) are sufficient to consider.
         candidates = [np.quaternion(0, 1, 1, 1), np.quaternion(0, 1, 1, 0)]
         w = candidates[1] if isParallel(candidates[0], v) else candidates[0]
-    # The cross product of (v, w) is right the answer.
-    return unit(crossProduct(v, w))
+
+    ans = crossProduct(v, w)
+    return unit(ans) if unit_ else ans
 
 
 def orthoNormalBasis(v):
-    w = ortho(v)
+    '''
+        Construct a set of orthogonal normal basis with `v` being one axis. \\
+        Returns the transformation matrix in row vector formation.
+    '''
+    v = unit(v)
+    w = ortho(v, unit_=True)
     u = unit(crossProduct(v, w))
-    return v, w, u
+    return np.array([[v.x, v.y, v.z], [w.x, w.y, w.z], [u.x, u.y, u.z]])
 
-def changeBasis(q, B):
-    v1 = np.quaternion(B[0, 0], B[0, 1], B[0, 2])
-    v2 = np.quaternion(B[1, 0], B[1, 1], B[1, 2])
-    v3 = np.quaternion(B[2, 0], B[2, 1], B[2, 2])
-    x = crossProduct(q, v1)
-    y = crossProduct(q, v2)
-    z = crossProduct(q, v3)
-    return np.quaternion(0, x, y, z)
+
+def transformBasis(q, mat):
+    '''
+        Transform the vector part of `q` to a new basis defined by `mat` (row vector formation)
+        with scalar component kept.
+    '''
+    x, y, z = [dotProduct(q, np.quaternion(0, *mat[i, :])) for i in range(3)]
+    return np.quaternion(q.w, x, y, z)
