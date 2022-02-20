@@ -5,6 +5,7 @@
 '''
 
 import numpy as np
+import quaternion
 
 EPS = np.finfo(np.float32).eps  # quaternion library internal uses float64. We relax epsilon to float32 here.
 X_AXIS = np.quaternion(0, 1, 0, 0)
@@ -24,9 +25,16 @@ def unit(q):
 
 def isPure(q):
     '''
-        Test if q is a pure quaternion
+        Test if q is a pure quaternion.
     '''
     return abs(q.w) < EPS
+
+
+def isScalar(q):
+    '''
+        Test if q is a scalar (x, y, z ~ 0).
+    '''
+    return abs(q.x) < EPS and abs(q.y) < EPS and abs(q.z) < EPS
 
 
 def dotProduct(a, b, scalar=False):
