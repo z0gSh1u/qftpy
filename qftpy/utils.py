@@ -4,6 +4,8 @@
     by z0gSh1u @ github.com/z0gSh1u/qftpy
 '''
 
+__all__ = ['unit', 'isPure', 'isScalarQ', 'dotProduct', 'crossProduct', 'isParallel', 'qzeros']
+
 import numpy as np
 import quaternion
 
@@ -11,6 +13,7 @@ EPS = np.finfo(np.float32).eps  # quaternion library internal uses float64. We r
 X_AXIS = np.quaternion(0, 1, 0, 0)
 Y_AXIS = np.quaternion(0, 0, 1, 0)
 Z_AXIS = np.quaternion(0, 0, 0, 1)
+ALL_ONE_AXIS = np.quaternion(0, 1, 1, 1)
 
 
 def unit(q):
@@ -30,9 +33,9 @@ def isPure(q):
     return abs(q.w) < EPS
 
 
-def isScalar(q):
+def isScalarQ(q):
     '''
-        Test if q is a scalar (x, y, z ~ 0).
+        Test if q is a scalar quaternion (x, y, z ~ 0).
     '''
     return abs(q.x) < EPS and abs(q.y) < EPS and abs(q.z) < EPS
 
@@ -63,7 +66,14 @@ def isParallel(a, b):
     return np.abs(crossProduct(a, b)) < EPS
 
 
-def ortho(v, unit_=True):
+def qzeros(shape):
+    '''
+        Create all zero array with `shape`.
+    '''
+    return np.zeros(shape, dtype=np.quaternion)
+
+
+def _ortho(v, unit_=True):
     '''
         Construct a vector prependicular to `v` (pure). \\
         Set `unit_=True` to get result with unit length.
@@ -86,18 +96,18 @@ def ortho(v, unit_=True):
     return unit(ans) if unit_ else ans
 
 
-def orthoNormalBasis(v):
+def _orthoNormalBasis(v):
     '''
         Construct a set of orthogonal normal basis with `v` being one axis. \\
         Returns the transformation matrix in row vector formation.
     '''
     v = unit(v)
-    w = ortho(v, unit_=True)
+    w = _ortho(v, unit_=True)
     u = unit(crossProduct(v, w))
     return np.array([[v.x, v.y, v.z], [w.x, w.y, w.z], [u.x, u.y, u.z]])
 
 
-def transformBasis(q, mat):
+def _transformBasis(q, mat):
     '''
         Transform the vector part of `q` to a new basis defined by `mat` (row vector formation)
         with scalar component kept.
