@@ -1,5 +1,7 @@
 # QFTPy
 
+<img align="left" src="https://github.com/z0gSh1u/qftpy/actions/workflows/run-unit-tests.yml/badge.svg?branch=master"></img>
+
 Quaternion Fourier Transform and Convolution
 
 ## Quick Start
