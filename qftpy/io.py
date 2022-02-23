@@ -32,14 +32,14 @@ def im2q(img):
     return quaternion.as_quat_array(img.flatten()).reshape((h, w))
 
 
-def q2im(qimg, pil=False):
+def q2im(qimg, PIL=False):
     """
-        Convert quaternion image to PIL image (`pil = True`, 24-bit RGB) or numpy array (CHW).
+        Convert quaternion image to PIL image (`PIL = True`, 24-bit RGB) or numpy array (CHW).
     """
     assert len(qimg.shape) == 2, 'qimg should be 2D.'
     vec = quaternion.as_vector_part(qimg)  # has HWC
     
-    if pil:
+    if PIL:
         # Clip pixel value.
         vec[vec > 255] = 255
         vec[vec < 0] = 0

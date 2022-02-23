@@ -1,40 +1,4 @@
-# import unittest
-# import quaternion
 
-# import sys
-
-# sys.path.append('../')
-
-# from qftpy.conv import conv, conv2
-
-# kl = [0, 1, 1, 1, 0, 3, 3, 3]
-# sig = [0, 1.5, 2.5, 3.5, 0, 2, 3, 4, 0, 3, 3, 3]  # , 0, 3, 3, 3
-# kr = [0, -1, -0.5, -1, 0, 1, 1, 1]
-
-# import numpy as np
-
-# kl = np.array([
-#     [np.quaternion(0,1,2,3), np.quaternion(0,1,2,3)],
-#     [np.quaternion(0,1.5,2.5,3.5), np.quaternion(0,3,3,3)],
-#     [np.quaternion(0,5,4,1), np.quaternion(0,-4,-3,3.5)],
-# ], dtype=np.quaternion)
-
-# sig = np.array([
-#     [np.quaternion(0,4,3,1), np.quaternion(0,1,2,3)],
-#     [np.quaternion(0,1.5,2.5,3.5), np.quaternion(0,3.5,3,3)],
-#     [np.quaternion(0,5,4,1), np.quaternion(0,-4,-3,6.5)],
-#     [np.quaternion(0,5,4,1), np.quaternion(0,-4,-3,6.5)],
-
-# ], dtype=np.quaternion)
-
-# kr = np.array([
-#     [np.quaternion(0,1,-2,3), np.quaternion(0,1,2,3)],
-#     [np.quaternion(0,1.5,-2.5,3.5), np.quaternion(0,3,5,3)],
-#     [np.quaternion(0,5,4,1), np.quaternion(0,-4,-3,3.5)],
-# ], dtype=np.quaternion)
-
-# res = conv2(sig, kl, kr)
-# print(res)
 
 import sys
 

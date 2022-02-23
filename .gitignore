@@ -1,4 +1,6 @@
 /**/__pycache__/
 /**/.ipynb_checkpoints/
 /matlabcheck/
-phantom.jpg
+/build/
+/dist/
+/*.egg-info
