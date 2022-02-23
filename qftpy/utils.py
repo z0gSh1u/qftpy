@@ -4,7 +4,7 @@
     by z0gSh1u @ github.com/z0gSh1u/qftpy
 '''
 
-__all__ = ['unit', 'isPure', 'isScalarQ', 'dotProduct', 'crossProduct', 'isParallel', 'qzeros']
+__all__ = ['unit', 'isPure', 'isScalarQ', 'dotProduct', 'crossProduct', 'isParallel', 'qzeros', 'qones', 'ALL_ONE_AXIS']
 
 import numpy as np
 import quaternion
@@ -71,6 +71,13 @@ def qzeros(shape):
         Create all zero array with `shape`.
     '''
     return np.zeros(shape, dtype=np.quaternion)
+
+
+def qones(shape):
+    '''
+        Create all one array with `shape`.
+    '''
+    return np.ones(shape, dtype=np.quaternion)
 
 
 def _ortho(v, unit_=True):

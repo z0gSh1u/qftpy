@@ -49,7 +49,7 @@ def conv2(A, kL=None, kR=None, keepShape=False):
         both for two-sided one. \\
         The shape of kernels should not be larger than `A`. \\
         If `keepShape` is `True`, the output matrix will have same shape as `A`.
-        Otherwise a little bigger.
+        Otherwise a little bigger with padding.
     """
     assert len(A.shape) == 2, 'A should be 2D matrix.'
     assert any([kL is not None, kR is not None]), 'kL and kR are both None.'
