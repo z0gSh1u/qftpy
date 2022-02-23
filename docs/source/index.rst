@@ -1,11 +1,16 @@
-QFTPy's documentation
+QFTPy's API Reference
 =================================
 
-`QFTPy GitHub <https://github.com/z0gSh1u/qftpy>`_
+`QFTPy on GitHub <https://github.com/z0gSh1u/qftpy>`_
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+Quick Start
+-----------------
+
+Please refer to the `README <https://github.com/z0gSh1u/qftpy/blob/master/README.md>`_ on GitHub repository.
 
 qftpy.conv module
 -----------------

@@ -40,7 +40,7 @@ def q2im(qimg, PIL=False):
     vec = quaternion.as_vector_part(qimg)  # has HWC
     
     if PIL:
-        # Clip pixel value.
+        # Clip pixel value to uint8 range.
         vec[vec > 255] = 255
         vec[vec < 0] = 0
         return Image.fromarray(vec.astype(np.uint8))
