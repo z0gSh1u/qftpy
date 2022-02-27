@@ -2,7 +2,11 @@
 
 <img align="left" src="https://github.com/z0gSh1u/qftpy/actions/workflows/run-unit-tests.yml/badge.svg?branch=master"></img>
 
+<br />
+
 Quaternion Fourier Transform and Convolution
+
+<img src="https://latex.codecogs.com/svg.image?\mathcal{X}^{\rm&space;D}(u,v)=\sum_{m=0}^{M-1}\sum_{n=0}^{N-1}W_M^{mu}x(m,n)W_N^{nv},\quad&space;W_N={\rm&space;exp}(-{\bf&space;\mu}\frac{2\pi}{N}),\quad\mu=\frac{1}{\sqrt{3}}(\rm&space;{i&plus;j&plus;k})" title="\mathcal{X}^{\rm D}(u,v)=\sum_{m=0}^{M-1}\sum_{n=0}^{N-1}W_M^{mu}x(m,n)W_N^{nv},\quad W_N={\rm exp}(-{\bf \mu}\frac{2\pi}{N}),\quad\mu=\frac{1}{\sqrt{3}}(\rm {i+j+k})" />
 
 ## Quick Start
 
